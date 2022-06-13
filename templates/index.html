@@ -1,0 +1,41 @@
+<html>
+    <form action="/login" method="GET">
+        Alredy fuild datas?
+        <br/>
+        <button type="submit"> Go to login page</button>
+    </form>
+    <form action="" method="post">
+
+        {{ form.csrf_token() }}
+        
+        {% for field in form if field.name != "csrf_token" %}
+
+        {% if field == form.check %}
+            {{field}} {{field.label}} </br>
+            <p>
+                {% for error in field.errors %}
+                {{ error }}
+                {% endfor %}
+            </p>
+        {% elif field == form.submit %}
+            {{ field }} </br>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+        {% else %}
+
+        <p>{{ field.label()}}</p>
+        <!-- <p>{{ field.label() }}</p> -->
+        <p>{{ field }}
+            {% for error in field.errors %}
+            <p style="color: red;">{{ error }}</p>
+            {% endfor %}
+        </p>
+        {% endif %}
+        {% endfor %}
+    </form>
+</html>
